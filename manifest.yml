@@ -1,0 +1,13 @@
+applications:
+- name: pagerhub
+  instances: 1
+  memory: 128M
+  buildpack: go_buildpack
+  routes:
+  - route: pagerhub.cfapps.io
+  command: pagerhub
+  env:
+    GOPACKAGENAME: github.com/concourse/pagerhub
+  stack: cflinuxfs2
+  health-check-type: http
+  health-check-http-endpoint: /api/v1/healthcheck

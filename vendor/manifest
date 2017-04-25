@@ -1,0 +1,37 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "github.com/bmizerany/pat",
+			"repository": "https://github.com/bmizerany/pat",
+			"vcs": "git",
+			"revision": "c068ca2f0aacee5ac3681d68e4d0a003b7d1fd2c",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/jessevdk/go-flags",
+			"repository": "https://github.com/jessevdk/go-flags",
+			"vcs": "git",
+			"revision": "460c7bb0abd6e927f2767cadc91aa6ef776a98b4",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/tedsuo/rata",
+			"repository": "https://github.com/tedsuo/rata",
+			"vcs": "git",
+			"revision": "0649c23705dfb45a9693b668c4fc1c0666f485d9",
+			"branch": "master",
+			"notests": true
+		},
+		{
+			"importpath": "github.com/vito/twentythousandtonnesofcrudeoil",
+			"repository": "https://github.com/vito/twentythousandtonnesofcrudeoil",
+			"vcs": "git",
+			"revision": "11ffd54d9ec2a811705130c3c64e5a532a8a9082",
+			"branch": "master",
+			"notests": true
+		}
+	]
+}
