@@ -34,6 +34,7 @@ func (g GithubSignatureMiddleware) ServeHTTP(rw http.ResponseWriter, r *http.Req
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		rw.WriteHeader(http.StatusInternalServerError)
+		rw.Write([]byte("error reading body"))
 		return
 	}
 

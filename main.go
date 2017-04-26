@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
 	"strconv"
 
 	"github.com/concourse/pagerhub/api"
@@ -23,15 +22,17 @@ func main() {
 
 	_, err := parser.Parse()
 	if err != nil {
-		os.Exit(1)
+		log.Fatal(err)
 	}
 
 	p := pagerduty.NewClient()
 
 	handler, err := api.NewHandler(opts, p)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
-	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(opts.Port), handler))
+	port := strconv.Itoa(opts.Port)
+	log.Println("starting server on :" + port)
+	log.Fatal(http.ListenAndServe(":"+port, handler))
 }

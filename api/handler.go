@@ -64,7 +64,7 @@ func (w *WebhookHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		Action:     pagerduty.ActionTrigger,
 		RoutingKey: w.PagerdutyIntegrationKey,
 		Payload: pagerduty.Payload{
-			Summary:  event.Issue.User.Login + " reported an issue",
+			Summary:  event.Issue.User.Login + " reported an issue: " + event.Issue.HTMLURL,
 			Source:   event.Issue.HTMLURL,
 			Severity: pagerduty.SeverityWarning,
 		},

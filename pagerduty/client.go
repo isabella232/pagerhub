@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httputil"
+
+	"github.com/pkg/errors"
 )
 
 type Client struct{}
@@ -15,29 +17,29 @@ func NewClient() *Client {
 }
 
 func (c *Client) Enqueue(e Event) error {
-	var buf *bytes.Buffer
+	b := new(bytes.Buffer)
 
-	err := json.NewEncoder(buf).Encode(e)
+	err := json.NewEncoder(b).Encode(e)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "encoding pagerduty event failed")
 	}
 
-	req, err := http.NewRequest("POST", "https://events.pagerduty.com/v2/enqueue", buf)
+	req, err := http.NewRequest("POST", "https://events.pagerduty.com/v2/enqueue", b)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "generating request to pagerduty failed")
 	}
 
 	req.Header.Set("Content-Type", "application/json")
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "making request to pagerduty failed")
 	}
 
 	if res.StatusCode >= http.StatusBadRequest {
 		r, err := httputil.DumpResponse(res, true)
 		if err != nil {
-			return err
+			return errors.Wrap(err, "dumping response failed")
 		}
 
 		return fmt.Errorf("bad pagerduty request (%i): %s", res.StatusCode, r)
