@@ -1,6 +1,7 @@
 package api
 
 import (
+	"bytes"
 	"crypto/hmac"
 	"crypto/sha1"
 	"encoding/hex"
@@ -30,7 +31,6 @@ func (g GithubSignatureMiddleware) ServeHTTP(rw http.ResponseWriter, r *http.Req
 	signature := make([]byte, 20)
 	hex.Decode(signature, []byte(s[5:]))
 
-	defer r.Body.Close()
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		rw.WriteHeader(http.StatusInternalServerError)
@@ -41,6 +41,8 @@ func (g GithubSignatureMiddleware) ServeHTTP(rw http.ResponseWriter, r *http.Req
 		rw.WriteHeader(http.StatusBadRequest)
 		return
 	}
+
+	r.Body = ioutil.NopCloser(bytes.NewBuffer(b))
 
 	g.Inner.ServeHTTP(rw, r)
 }

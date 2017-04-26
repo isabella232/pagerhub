@@ -4,7 +4,7 @@ import "github.com/tedsuo/rata"
 
 const (
 	HealthCheck = "HealthCheck"
-	Webhook = "Webhook"
+	Webhook     = "Webhook"
 )
 
 var Routes = rata.Routes([]rata.Route{

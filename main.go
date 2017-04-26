@@ -7,9 +7,10 @@ import (
 	"strconv"
 
 	"github.com/concourse/pagerhub/api"
+	"github.com/concourse/pagerhub/cmd"
+	"github.com/concourse/pagerhub/pagerduty"
 	"github.com/jessevdk/go-flags"
 	"github.com/vito/twentythousandtonnesofcrudeoil"
-	"github.com/concourse/pagerhub/cmd"
 )
 
 func main() {
@@ -25,7 +26,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	handler, err := api.NewHandler(opts)
+	p := pagerduty.NewClient()
+
+	handler, err := api.NewHandler(opts, p)
 	if err != nil {
 		panic(err)
 	}
