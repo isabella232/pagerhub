@@ -10,10 +10,16 @@ import (
 	"github.com/pkg/errors"
 )
 
-type Client struct{}
+type Client struct {
+	URL string
+}
+
+const PagerdutyAPIURL = "https://events.pagerduty.com/v2/enqueue"
 
 func NewClient() *Client {
-	return &Client{}
+	return &Client{
+		URL: PagerdutyAPIURL,
+	}
 }
 
 func (c *Client) Enqueue(e Event) error {
@@ -24,7 +30,7 @@ func (c *Client) Enqueue(e Event) error {
 		return errors.Wrap(err, "encoding pagerduty event failed")
 	}
 
-	req, err := http.NewRequest("POST", "https://events.pagerduty.com/v2/enqueue", b)
+	req, err := http.NewRequest("POST", c.URL, b)
 	if err != nil {
 		return errors.Wrap(err, "generating request to pagerduty failed")
 	}

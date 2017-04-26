@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/concourse/pagerhub/api"
@@ -22,7 +23,7 @@ func main() {
 
 	_, err := parser.Parse()
 	if err != nil {
-		log.Fatal(err)
+		os.Exit(1)
 	}
 
 	p := pagerduty.NewClient()
